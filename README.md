@@ -22,7 +22,7 @@ whenever a new version of the upstream action is tagged.
 ## Usage
 
 ```yaml
-- uses: carabiner-dev/verify@v1.0.0
+- uses: carabiner-dev/verify@v1.2.0
   with:
     policy: '.ampel/policy.yaml'
     subject: 'path/to/binary'
