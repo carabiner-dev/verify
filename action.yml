@@ -1,0 +1,77 @@
+# SPDX-FileCopyrightText: Copyright 2026 Carabiner Systems, Inc
+# SPDX-License-Identifier: Apache-2.0
+---
+name: 'Verify AMPEL Policy'
+author: "carabiner-dev"
+description: 'Verifies a software artifact against an 🔴🟡🟢 AMPEL supply chain policy'
+branding:
+  icon: 'lock'
+  color: 'yellow'
+inputs:
+  policy:
+    description: 'Path or URI to the security policy file to evaluate against'
+    required: true
+  subject:
+    description: 'Path to a file or hash (algo:value) to use as verification subject'
+    required: true
+  collector:
+    description: 'Collector to load to read attestations'
+    required: true
+  attest:
+    description: 'Attest the policy evaluation results'
+    required: false
+    default: "true"
+  attest-format:
+    description: 'Format of the results attestation'
+    required: false
+    default: "ampel"
+  results-path:
+    description: "Path to store the results attestation"
+    required: false
+    default: "ampel.intoto.json"
+  push-attestation:
+    description: 'Pushes the attestation to the GitHub attestations store'
+    required: false
+    default: "false"
+  attestation:
+    description: 'Comma separated list of attestations to ingest'
+    required: false
+    default: ""
+  signer:
+    description: 'Comma separated list of signer identity slugs'
+    required: false
+    default: ""
+  key:
+    description: 'Path to a key file to use for verification'
+    required: false
+    default: ""
+  keydata:
+    description: 'Raw key material to use for verification'
+    required: false
+    default: ""
+  context:
+    description: 'Contextual values to pass to the policy (e.g. "key=value,key2=value2")'
+    required: false
+    default: ""
+  fail:
+    description: 'Fail the workflow if the policy fails'
+    required: false
+    default: "true"
+runs:
+  using: composite
+  steps:
+    - uses: carabiner-dev/actions/ampel/verify@2a11d59a135c5e291f305f249a92ad7903e3ee0f # v1.1.7
+      with:
+        policy: ${{ inputs.policy }}
+        subject: ${{ inputs.subject }}
+        collector: ${{ inputs.collector }}
+        attest: ${{ inputs.attest }}
+        attest-format: ${{ inputs.attest-format }}
+        results-path: ${{ inputs.results-path }}
+        push-attestation: ${{ inputs.push-attestation }}
+        attestation: ${{ inputs.attestation }}
+        signer: ${{ inputs.signer }}
+        key: ${{ inputs.key }}
+        keydata: ${{ inputs.keydata }}
+        context: ${{ inputs.context }}
+        fail: ${{ inputs.fail }}
